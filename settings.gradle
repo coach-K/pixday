@@ -1,0 +1,2 @@
+rootProject.name = "Pixday"
+include ':app'
