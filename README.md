@@ -12,7 +12,7 @@ lets quickly look at the libraries/dependencies used on PixDay.
 A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously, coroutines help to manage long-running tasks that might
 otherwise block the main thread and cause your app to become unresponsive.
 
-* paging-runtime-ktx: This used instead of implementing RecyclerView.addOnScrollListener(), Paging has a configurable RecyclerView adapters that automatically request data as the user scrolls toward the end of the loaded data.
+* paging-runtime-ktx: This is used instead of implementing RecyclerView.addOnScrollListener(), Paging has a configurable RecyclerView adapters that automatically request data as the user scrolls toward the end of the loaded data.
 Paging helps you load and display pages of data from a larger dataset from local storage or over network.
 
 * retrofit: This is used to make API/network requests. Retrofit is a type-safe REST client for Android, Java and Kotlin. It provides a framework for interacting with APIs and sending network requests with OkHttp.
@@ -24,8 +24,7 @@ Paging helps you load and display pages of data from a larger dataset from local
 The Android Architecture Component flow is used as a pattern for this project. Take a look at the project directory structure. Android architecture components are a collection of libraries that help you design robust, testable, and maintainable apps.
 Start with classes for managing your UI component lifecycle and handling data persistence.
 
-* The api section: on the api directory section we have [OAuthInterceptor], [PhotoResponse] and [ShutterStockService]. This are setup to easily make API/network request to the ShutterStock Endpoint. Because the ShutterStock endpoint requires an Authorization token,
-the OAuthInterceptor is created to intercept each network request, adds the ShutterStock authorization token obtained from the ShutterStock developer web account and proceed with the request.
+* The api section: On the api directory section we have [OAuthInterceptor], [PhotoResponse] and [ShutterStockService]. This are setup to easily make API/network request to the ShutterStock Endpoint. Because the ShutterStock endpoint requires an Authorization token, the OAuthInterceptor is created to intercept each network request, adds the ShutterStock authorization token obtained from the ShutterStock developer web account and proceed with the request.
 ```
 //Intercepts the current request and adds an accessToken to the chain.
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -37,7 +36,7 @@ the OAuthInterceptor is created to intercept each network request, adds the Shut
     }
 ```
 
-* The data section: This section of the project interact with the api section and exposes data to other part of the application using the [ShutterStockPagingSource] and [ShutterStockRepository] of {getSearchResultStream} method.
+* The data section: This section of the project interact with the api section and exposes data to other part of the application using the [ShutterStockPagingSource] and [ShutterStockRepository] through the {getSearchResultStream} method.
 ```
 class ShutterStockRepository(
     private val service: ShutterStockService
@@ -57,7 +56,7 @@ class ShutterStockRepository(
 }
 ```
 
-* The ui section: This is responsible for organizing, maintaining and displaying data obtained from the data section to the user, it loads data into [PhotosAdapter] and handles errors and retry state with the [PhotoLoadStateAdapter].
+* The ui section: This is responsible for organizing, maintaining and displaying data obtained from the data section, it loads data into [PhotosAdapter] and handles errors and retry state with the [PhotoLoadStateAdapter].
 The [SearchRepositoriesViewModel] handles data querying and persistence, the method {searchPhoto} prevents searching for the same keyword multiple times and returns search result in kotlin Flow.
 ```
 fun searchPhoto(queryString: String): Flow<PagingData<Photo>> {
@@ -75,7 +74,7 @@ fun searchPhoto(queryString: String): Flow<PagingData<Photo>> {
 ```
 
 ## Test
-For simplicity sake we make use of the Injection object pattern instead of Dagger. The project has different build variant namely: release, debug and staging. The release variant has the Injection object put together for when the developer is ready to make an app release.
+For simplicity sake we make use of the Injection object pattern instead of Dagger. The project has different build variant namely: `release`, `debug` and `staging`. The release variant has the Injection object put together for when the developer is ready to make an app release.
 * Note: The release variant requires a ShutterStock OAuth access token in its [Injection] object, which can be obtained from the ShutterStock Developer web platform *
 
 The debug variant also has its Injection object responsible for running the app in a debug or development state.
@@ -86,8 +85,8 @@ The staging variant is where we run all test (Unit and Integrated) for business 
 
 
 ## Todo
-This areas is worth exploring to better improve the project.
-* Offline first approach: The offline first feature would fetch data from the endpoint and stores it on a database (Room), since data from database are displayed on the ui, more data is fetched from the endpoint and appended to the database when all data on database is displayed (i.e. user is almost at the end of the list).
+This areas are worth exploring to better improve the project.
+* Offline first approach: The offline first feature would fetch data from the endpoint and stores it on a database (Room), since data from the database are displayed on the ui, more data is fetched from the endpoint and appended to the database when all data on database is displayed (i.e. user is almost at the end of the list).
 Introduction of Room persistence and the Paging experimental class Mediator to the project would be instrumental in achieving the offline first feature.
 * If the project becomes large the need to migrate the use of Injection object to Dagger would be resourceful.
 * More test cases can be written to cover more edge cases to improve app performance and resolve possible loop hole that might introduce bugs.
