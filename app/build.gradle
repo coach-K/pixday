@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        staging {
+            storeFile file('/Users/codekenn/AndroidStudioProjects/pixday-main/pixday/Untitled')
+            storePassword '123456'
+            keyAlias 'Pixday'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
@@ -22,6 +30,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        staging {
+            applicationIdSuffix = ".staging"
+            signingConfig signingConfigs.staging
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,6 +46,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testBuildType "staging"
 }
 
 dependencies {
@@ -51,16 +64,16 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
+
+    //photo
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
 
     //test
     testImplementation "junit:junit:$junitVersion"
