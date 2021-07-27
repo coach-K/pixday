@@ -1,4 +1,4 @@
-# pixday
+# PixDay
 
 PixDay is a simple Android app that provides an endless scroll of a user searched images result.
 User inputs a keyword on the search bar and PixDay would display an endless scroll of distinct images from ShutterStock which is related to the search.
@@ -24,7 +24,7 @@ Paging helps you load and display pages of data from a larger dataset from local
 The Android Architecture Component flow is used as a pattern for this project. Take a look at the project directory structure. Android architecture components are a collection of libraries that help you design robust, testable, and maintainable apps.
 Start with classes for managing your UI component lifecycle and handling data persistence.
 
-** The api section: on the api directory section we have [OAuthInterceptor], [PhotoResponse] and [ShutterStockService]. This are setup to easily make API/network request to the ShutterStock Endpoint. Because the ShutterStock endpoint requires an Authorization token,
+* The api section: on the api directory section we have [OAuthInterceptor], [PhotoResponse] and [ShutterStockService]. This are setup to easily make API/network request to the ShutterStock Endpoint. Because the ShutterStock endpoint requires an Authorization token,
 the OAuthInterceptor is created to intercept each network request, adds the ShutterStock authorization token obtained from the ShutterStock developer web account and proceed with the request.
 ```
 //Intercepts the current request and adds an accessToken to the chain.
@@ -37,7 +37,7 @@ the OAuthInterceptor is created to intercept each network request, adds the Shut
     }
 ```
 
-** The data section: This section of the project interact with the api section and exposes data to other part of the application using the [ShutterStockPagingSource] and [ShutterStockRepository] of {getSearchResultStream} method.
+* The data section: This section of the project interact with the api section and exposes data to other part of the application using the [ShutterStockPagingSource] and [ShutterStockRepository] of {getSearchResultStream} method.
 ```
 class ShutterStockRepository(
     private val service: ShutterStockService
@@ -57,7 +57,7 @@ class ShutterStockRepository(
 }
 ```
 
-** The ui section: This is responsible for organizing, maintaining and displaying data obtained from the data section to the user, it loads data into [PhotosAdapter] and handles errors and retry state with the [PhotoLoadStateAdapter].
+* The ui section: This is responsible for organizing, maintaining and displaying data obtained from the data section to the user, it loads data into [PhotosAdapter] and handles errors and retry state with the [PhotoLoadStateAdapter].
 The [SearchRepositoriesViewModel] handles data querying and persistence, the method {searchPhoto} prevents searching for the same keyword multiple times and returns search result in kotlin Flow.
 ```
 fun searchPhoto(queryString: String): Flow<PagingData<Photo>> {
